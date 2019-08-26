@@ -145,18 +145,14 @@ public class RemotingUtil {
     }
 
     public static SocketAddress string2SocketAddress(final String addr) {
-        String[] s = addr.split(":");
-        InetSocketAddress isa = new InetSocketAddress(s[0], Integer.parseInt(s[1]));
+        HostAndPort hostAndPort = HostAndPort.fromString(addr);
+        InetSocketAddress isa = new InetSocketAddress(hostAndPort.getHost(), hostAndPort.getPort());
         return isa;
     }
 
     public static String socketAddress2String(final SocketAddress addr) {
-        StringBuilder sb = new StringBuilder();
         InetSocketAddress inetSocketAddress = (InetSocketAddress) addr;
-        sb.append(inetSocketAddress.getAddress().getHostAddress());
-        sb.append(":");
-        sb.append(inetSocketAddress.getPort());
-        return sb.toString();
+        return HostAndPort.fromParts(inetSocketAddress.getAddress().getHostAddress(), inetSocketAddress.getPort()).toString();
     }
 
     public static SocketChannel connect(SocketAddress remote) {

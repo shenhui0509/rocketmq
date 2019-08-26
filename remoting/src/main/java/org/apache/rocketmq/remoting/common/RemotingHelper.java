@@ -53,8 +53,8 @@ public class RemotingHelper {
     }
 
     public static SocketAddress string2SocketAddress(final String addr) {
-        String[] s = addr.split(":");
-        InetSocketAddress isa = new InetSocketAddress(s[0], Integer.parseInt(s[1]));
+        HostAndPort hostAndPort = HostAndPort.fromString(addr);
+        InetSocketAddress isa = new InetSocketAddress(hostAndPort.getHost(), hostAndPort.getPort());
         return isa;
     }
 
